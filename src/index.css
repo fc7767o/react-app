@@ -216,7 +216,7 @@ transform: translateY(-2px);
     color: #fff;
     border: none;
     font-size: 24px;
-    width: 50px;
+    width: 45px;
     height: 45px;
     border-radius: 50%;
     cursor: pointer;
@@ -245,4 +245,29 @@ transform: translateY(-2px);
 
 .dot.active {
     background: #ff9fe7;
+}
+
+
+.delete-button{
+    color: #646464;
+    margin: 5px;
+    border: none;
+    background: #ffdbe9;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+
+}
+
+.delete-button:hover{
+    background: #e2e5e9;
+    transform: translateY(-2px);
+}
+
+.avatar-pink{
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
 }

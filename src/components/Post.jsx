@@ -9,9 +9,15 @@ function Post({author, text, title, onDelete, id}){
             
             <Actions />
 
-            <button className='delete-button' onClick={() => onDelete(id)}>
+
+            {onDelete && (
+                <button className='delete-button' onClick={() => onDelete(id)}>
                 Удалить
-            </button>
+                </button>
+            )}
+
+
+     
         </article>
     )
 }
