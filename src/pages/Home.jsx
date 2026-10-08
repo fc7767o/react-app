@@ -1,0 +1,72 @@
+import Post from "../components/Post";
+
+function Home(){
+    const posts = [
+            {
+                id: 1,
+                title: "Oxygen WordPress Site Builder Review",
+                text: "Oxygen is a fairly new visual WordPress site builder from the Soflyy team – the developers behind WP All Import and WP Sandbox. The software has just officially launched as version 2.0, which offers advanced functionality from the initial release. Oxygen was designed to offer the ease of use of other theme and page builders […]",
+                author: "Ksusha"
+            },
+            
+            {
+                id: 2,
+                title: "Follow these principles to design an effective website",
+                text: "The success of any web site is not determined by its visual design, but by its utility, and most importantly usability. The user is in the center of attention because the user is the one who is clicking the mouse and using the page, so everything must revolve around him.",
+                author: "Ksusha"
+            },
+    
+            {
+                id: 3,
+                title: "Freebie: Stone and Concrete Textures",
+                text: "Today we have a set of free high res stone and concrete textures from Caleb Kimbrough. The set includes 10 high-quality textures that can be used for personal or commercial purposes. You can download any of the images from Flickr (click on the image that you want and you’ll be led to the Flick page). […]",
+                author: "Ksusha"
+            },
+            {
+                id: 4,
+                title: "450+ Adobe Illustrator Patterns",
+                text: "The Adobe Creative Suite has to be one of the more popular design packages. Illustrator is specifically a great tool for any project including website layouts, vector art, illustrations, logos, and so much more. One resource many designers utilize are patterns for backgrounds. Repeating patterns are often more popular in websites to fill the whole […]",
+                author: "Ksusha"
+            },
+            
+            {
+                id: 5,
+                title: "The Content Dilemma – Executing and Scaling Your Campaigns",
+                text: " The concept of Content Personalization is to show a customized message to the right person with the hypothesis that this will lead to higher revenue/engagement/[Insert KPI here].  The idea is solid and has been proven out at small scale but very few, if any, organizations are successfully executing.  As marketers, we’ve bought the DMPs, […]",
+                author: "Ksusha"
+            },
+    
+            {
+                id: 6,
+                title: "How to Design a Profitable Landing Page",
+                text: "Good design of a Landing Page (LP) is not just about the emotions you experience when looking at it – it’s actually a much wider concept and the main goal of it is to solve business tasks. Unfortunately, many novice marketers and businessmen make a common mistake and set wrong priorities when designing an LP. […]",
+                author: "Ksusha"
+            },
+            {
+                id: 7,
+                title: "Registrations are due soon for taking part in The A’ Design Award – Sign Up Your Designs Today",
+                text: "A’ Design Award is the World’s most prestigious international annual juried accolade for design. The A’ Design Competitions are organized in all creative fields to highlight the greatest designs from all countries in all disciplines. Entries to the A’ Design Awards are blind peer reviewed by an expert jury panel of leading academics, prominent press […]",
+                author: "Ksusha"
+            },
+            
+            {
+                id: 8,
+                title: "4 Ways to Personalize Your Emails with Real Examples",
+                text: "All of us love personalized services. Regardless of the business you’re running, personalization can make a huge difference. The same applies to email marketing as well. By collecting data on customer behaviors, you can find out what they’re interested in, which also helps you personalize the email tailored to their unique behavior and the interest. […]",
+                author: "Ksusha"
+            }
+        ]
+        return(
+            <section>
+                <h1>Главная</h1>
+                <div className="feed">
+                    <h2>Лента</h2>
+                    {posts.map((post) =>(
+                 <Post key={post.id} author={post.author} title={post.title} text={post.text} id={post.id}/>
+            ))}
+                </div>
+            </section>
+        );
+}
+
+export default Home;
