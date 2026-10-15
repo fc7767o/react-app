@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import { PostProvider } from "./context/PostsContext";
+import { UserProvider } from "./context/UserContext";
  import Header from "./components/Header";
 // import ProfileCard from "./components/ProfileCard"
 import Home from "./pages/Home";
@@ -18,13 +20,16 @@ function App() {
     <div className='app'>
       <Header />
       <main>
-        
-      <Routes>
-        <Route path="/home" element={<Home />}/>
-        <Route path="/profile" element={<Prifile />}/>
-        <Route path="/settings" element={<Settings />}/>
-        <Route path="/info" element={<Info />}/>
-      </Routes>
+        <UserProvider>
+          <PostProvider>
+            <Routes>
+              <Route path="/home" element={<Home />}/>
+              <Route path="/profile" element={<Prifile />}/>
+              <Route path="/settings" element={<Settings />}/>
+              <Route path="/info" element={<Info />}/>
+            </Routes>
+          </PostProvider>
+        </UserProvider>
       </main>
     </div>
 

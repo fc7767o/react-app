@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Post from './Post';
+import { useUser } from '../context/UserContext';
 
 function ProfileCard(){
     // const [posts, setPosts] = useState([
@@ -83,7 +84,8 @@ function ProfileCard(){
     //     )
     // }
 
-    
+    const { userName } = useUser();
+
 
 
     return(
@@ -93,7 +95,7 @@ function ProfileCard(){
                     <img className='avatar-pink' src="https://img1.picmix.com/output/pic/normal/5/6/8/5/9845865_f6237.gif" alt="" />
                 </div>
                 <div className='profile-info'>
-                    <h2>My Real Name</h2>
+                    <h2>{userName}</h2>
                     <p>social network nickname</p>
                 </div>
                 <p className='profile-description'>oops i did it again</p>

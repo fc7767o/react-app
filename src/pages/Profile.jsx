@@ -1,6 +1,8 @@
-import { useState, useEffect} from "react";
+import { useState } from "react";
 import ProfileCard from "../components/ProfileCard";
 import Post from "../components/Post";
+import { usePosts } from "../context/PostsContext";
+import { useUser } from "../context/UserContext";
 
 function Prifile(){
 // const [posts, setPosts] = useState([
@@ -12,51 +14,61 @@ function Prifile(){
 //         }
 //     ]);
 
-    const [posts, setPosts] = useState(() =>
-    {
-        const savedPosts = localStorage.getItem("posts");
-        if(savedPosts){
-            return JSON.parse(savedPosts)
-        }
-        return [
-        {
-            id: 1,
-            title: "Oxygen WordPress Site Builder Review",
-            text: "Oxygen is a fairly new visual WordPress site builder from the Soflyy team – the developers behind WP All Import and WP Sandbox. The software has just officially launched as version 2.0, which offers advanced functionality from the initial release. Oxygen was designed to offer the ease of use of other theme and page builders […]",
-            author: "Ksusha"
-        },
-    ];
-    });
+    // const [posts, setPosts] = useState(() =>
+    // {
+    //     const savedPosts = localStorage.getItem("posts");
+    //     if(savedPosts){
+    //         return JSON.parse(savedPosts)
+    //     }
+    //     return [
+    //     {
+    //         id: 1,
+    //         title: "Oxygen WordPress Site Builder Review",
+    //         text: "Oxygen is a fairly new visual WordPress site builder from the Soflyy team – the developers behind WP All Import and WP Sandbox. The software has just officially launched as version 2.0, which offers advanced functionality from the initial release. Oxygen was designed to offer the ease of use of other theme and page builders […]",
+    //         author: "Ksusha"
+    //     },
+    // ];
+    // });
 
+    const{userName} = useUser();
+    const { posts, setPosts} = usePosts();
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
+    const [error, setError] = useState("");
+
+
+
     // useEffect(() =>{
     //     console.log("изменились посты");
     // }, [posts]);
 
-    useEffect(() =>{
-        localStorage.setItem(
-            "posts",
-            JSON.stringify(posts)
-        )
-    }, [posts]);
+    // useEffect(() =>{
+    //     localStorage.setItem(
+    //         "posts",
+    //         JSON.stringify(posts)
+    //     )
+    // }, [posts]);
 
 
     function addPost(event){
         event.preventDefault();
 
-        if(!title.trim() && !text.trim()) return;
+        if(!title.trim() && !text.trim()){
+            setError("Заполните штучку");
+            return;
+        } 
 
         const newPost = {
             id: Date.now(),
             title: title,
             text: text,
-            author: "Ksusha"
+            author: userName,
         }
 
         setPosts([...posts, newPost]);
         setTitle("");
         setText("");
+        setError("");
 
     }
 
@@ -79,6 +91,13 @@ return(
             <p>Всего публикаций: {posts.length}</p>
 
             <form className='post-form' onSubmit={addPost}>
+
+                {error && (
+                    <p className="form-error">
+                        {error}
+                    </p>
+                )}
+
                 <input 
                     type="text" 
                     placeholder='Заголовок' 
