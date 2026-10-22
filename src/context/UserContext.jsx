@@ -7,6 +7,9 @@ const UserContext = createContext(null);
 
 export function UserProvider({ children }){
     const [userName, setUserName] = useState("Victor");
+    const [avatar, setAvatar] = useState(()=>{
+        return localStorage.getItem("avatar") || "";
+    })
 
         return(
         <UserContext.Provider value={{ userName, setUserName }}>

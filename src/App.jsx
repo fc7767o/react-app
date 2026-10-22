@@ -1,6 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import { PostProvider } from "./context/PostsContext";
 import { UserProvider } from "./context/UserContext";
+import { useTheme } from "./context/ThemeContext";
+
  import Header from "./components/Header";
 // import ProfileCard from "./components/ProfileCard"
 import Home from "./pages/Home";
@@ -16,8 +18,9 @@ import ProfileCard from "./components/ProfileCard";
 
 function App() {
 
+  const { theme } = useTheme();
   return (
-    <div className='app'>
+    <div className={`app theme-${theme}`}>
       <Header />
       <main>
         <UserProvider>

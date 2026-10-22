@@ -1,273 +1,554 @@
-* {
-box-sizing: border-box;
-}
-
-body {
-margin: 0;
-font-family: Arial, Arial, Helvetica, sans-serif;
-background: #ffe9f2;
-color: #222;
-}
-
-.button{
-    font-family: inherit;
-}
-
+/* ===== Базовые переменные ===== */
 .app {
-min-height: 100vh;
+  min-height: 100vh;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
-/*Header*/
+/* ================= СВЕТЛАЯ ТЕМА (нежно-розовая, глянцевая) ================= */
+.app.theme-light {
+  --bg-page:        radial-gradient(1200px 600px at 50% -10%, #ffd6e7 0%, #ffeaf3 45%, #fff5f9 100%);
+  --bg-card:        rgba(255, 245, 250, 0.82);
+  --bg-input:       #ffe9f2;
+  --bg-input-focus: #ffa2cc;
+
+  --text-main:      #6b2c47;
+  --text-muted:     #c76e92;
+  --text-heading:   #ff4f8b;
+
+  --accent:         #ff7fb0;
+  --accent-soft:    #ffd0e3;
+  --accent-hover:   #ff9cc4;
+
+  --border:         #ffc2da;
+
+  --header-bg:      linear-gradient(135deg, #ffd0e3 0%, #ff9cc4 50%, #ff6fa5 100%);
+  --header-text:    #ffffff;
+
+  /* свечения — ярче и «стекляннее» */
+  --glow-accent:    0 0 20px rgba(255, 127, 176, 0.65),
+                    0 0 40px rgba(255, 180, 210, 0.45);
+  --glow-card:      0 0 0 1px rgba(255, 210, 228, 0.9),
+                    0 10px 40px rgba(255, 127, 176, 0.35),
+                    0 0 60px rgba(255, 190, 220, 0.55),
+                    0 1px 0 rgba(255, 255, 255, 0.95) inset;
+  --glow-btn-hover: 0 6px 22px rgba(255, 127, 176, 0.6),
+                    0 0 30px rgba(255, 180, 210, 0.7);
+
+  background: var(--bg-page);
+  background-attachment: fixed;
+  color: var(--text-main);
+}
+
+/* ================= РОЗОВАЯ ТЕМА (насыщенная «розовая ночь», неон) ================= */
+/* ================= РОЗОВАЯ ТЕМА (насыщенная, но не тёмная) ================= */
+.app.theme-dark {
+  --bg-page:        radial-gradient(1200px 700px at 50% -10%, #ffb3d4 0%, #ff8fc0 45%, #ff7fb5 100%);
+  --bg-card:        rgba(255, 225, 240, 0.75);
+  --bg-input:       #ffd0e6;
+  --bg-input-focus: #ffc0dd;
+
+  --text-main:      #7a1f47;
+  --text-muted:     #b3487a;
+  --text-heading:   #e0236f;
+
+  --accent:         #ff4f95;
+  --accent-soft:    #ffb3d4;
+  --accent-hover:   #ff6fae;
+
+  --border:         #ff9cc4;
+
+  --header-bg:      linear-gradient(135deg, #f888b5 0%, #ffaacc 50%, #ffd8e8 100%);
+  --header-text:    #fff0f7;
+
+  /* свечения — ярче, чем в светлой, но без «ночного» неона */
+  --glow-accent:    0 0 22px rgba(255, 79, 149, 0.7),
+                    0 0 44px rgba(255, 140, 190, 0.5);
+  --glow-card:      0 0 0 1px rgba(255, 180, 215, 0.75),
+                    0 10px 42px rgba(224, 35, 111, 0.35),
+                    0 0 65px rgba(255, 150, 200, 0.5),
+                    0 1px 0 rgba(255, 255, 255, 0.6) inset;
+  --glow-btn-hover: 0 6px 24px rgba(224, 35, 111, 0.55),
+                    0 0 34px rgba(255, 140, 190, 0.65);
+
+  background: var(--bg-page);
+  background-attachment: fixed;
+  color: var(--text-main);
+}
+
+/* ===== Подхват переменных ===== */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-main, #6b2c47);
+}
 
 .header {
-padding: 40px 20px;
-text-align: center;
-background: #ffb4cd;
-color: white;
+  position: relative;
+  padding: 40px 20px;
+  text-align: center;
+  background: var(--header-bg, #ffb4cd);
+  color: var(--header-text, white);
+  transition: background 0.4s;
+  overflow: hidden;
+  box-shadow: 0 6px 30px rgba(255, 111, 174, 0.35);
+}
+
+/* Пробегающий блик по шапке */
+.header::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 100%);
+  transform: skewX(-20deg);
+  pointer-events: none;
+  animation: shine 6s ease-in-out infinite;
+}
+
+@keyframes shine {
+  0%   { left: -120%; }
+  40%  { left: 130%; }
+  100% { left: 130%; }
 }
 
 .header h1 {
-margin: 0 0 10px;
-font-size: 32px;
+  position: relative;
+  z-index: 1;
+  margin: 0 0 10px;
+  font-size: 32px;
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.7);
 }
 
 .header p {
-margin: 0;
-color: #8b8b8b;
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: var(--text-muted, #ffe0ee);
 }
 
-/*Main*/
-
-main{
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 40px 20px;
-
+main {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
 
-/*Profile*/
-.profile-card{
-    background: white;
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-
-}
-.profile{
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding-bottom: 25px;
-    border-bottom: 1px solid #e5e7eb;
+/* Profile — карточка с мягким свечением */
+.profile-card {
+  background: var(--bg-card, #fff5fa);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: var(--glow-card, 0 10px 30px rgba(255, 111, 174, 0.2));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border, #ffc2da);
+  transition: background 0.4s, box-shadow 0.4s;
 }
 
-
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid var(--border, #ffc2da);
+}
 
 .avatar {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: #ff9cba;
-    color: white;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 24px;
-    font-weight: bold;
+  width: 55px; height: 55px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent, #ff7fb0), #ff4f8b);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: var(--glow-accent, none);
+  transition: box-shadow 0.4s;
 }
 
-.profile-info h2{
-    color: #646464;
-    margin: 0 0 5x;
+.profile-info h2 {
+  color: var(--text-heading, #ff4f8b);
+  margin: 0 0 5px;
+  text-shadow: 0 0 12px rgba(255, 127, 176, 0.5);
 }
 
-.profile-info p{
-    margin: 0;
-    color: #6b7280;
+.profile-info p {
+  margin: 0;
+  color: var(--text-muted, #c76e92);
 }
 
-/*Post*/
+/* Post */
+.post {
+  padding: 25px 0;
+  border-bottom: 1px solid var(--border, #ffc2da);
+}
+.post:last-child { border-bottom: none; }
 
-.post{
-    padding: 25px 0;
-    border-bottom: 1ox solid #e5e7eb;
-
+.post h2 {
+  color: var(--text-heading, #ff4f8b);
+  margin: 0 0 12px;
+  font-size: 22px;
+  text-shadow: 0 0 16px rgba(255, 127, 176, 0.55);
 }
 
-.post:last-child{
-    border-bottom: none;
+.post-text {
+  margin: 0 0 10px;
+  color: var(--text-muted, #c76e92);
+  line-height: 1.6;
 }
 
-.post h2{
-    color: #646464;
-    margin: 0 0 12px;
-    font-size: 22px;
-
+.post-author {
+  margin: 0;
+  color: var(--text-muted, #c76e92);
+  font-size: 14px;
 }
 
-.post-text{
-    margin: 0 0 10px;
-    color: rgb(173, 173, 173);
-    line-height: 1.6;
-}
-
-.post-author{
-    margin: 0;
-    color: #9ca3af;
-    font-size: 14px;
-
-
-}
-
-.post-input, 
-.post-textarea{
-        width: 100%;
-        padding: 14px 16px;
-        margin: 5px;
-        font-size: 16px;
-        font-family: inherit;
-        color: #222;
-        background: #f7f8fa;
-        border: 1.5px solid transparent;
-        border-radius: 12px;
-        outline: none;
-        box-sizing: border-box;
+/* Inputs — со свечением в фокусе */
+.post-input,
+.post-textarea {
+  width: 100%;
+  padding: 14px 16px;
+  margin: 5px 0;
+  font-size: 16px;
+  font-family: inherit;
+  color: var(--text-main, #6b2c47);
+  background: var(--bg-input, #ffe9f2);
+  border: 1.5px solid var(--border, transparent);
+  border-radius: 12px;
+  outline: none;
+  box-sizing: border-box;
+  transition: background 0.25s, border-color 0.25s, box-shadow 0.25s, color 0.25s;
 }
 
 .post-input:focus,
-.post-textarea:focus{
-    background: #ffe9f2;
-    border-color: #ff9cba;
-    transition: 0.2s;
+.post-textarea:focus {
+  background: var(--bg-input-focus, #ffdcec);
+  border-color: var(--accent, #ff7fb0);
+  box-shadow: var(--glow-accent, none);
 }
 
-.post-button{
-    color: #646464;
-    margin: 5px;
-    border: none;
-    background: #ffdbe9;
-    padding: 12px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.2s;
-
+/* Кнопки — гламурное свечение при наведении */
+.post-button,
+.delete-button,
+.actions button{
+  position: relative;
+  overflow: hidden;
+  color: var(--text-main, #6b2c47);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: var(--accent-soft, #ffd0e3);
+  padding: 12px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: inherit;
+  transition: background 0.25s, box-shadow 0.25s, transform 0.2s, color 0.25s;
 }
 
-.post-button:hover{
-    background: #e2e5e9;
-    transform: translateY(-2px);
+/* Пробегающий блик по кнопкам */
+.post-button::after,
+.delete-button::after,
+.actions button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.75) 50%,
+    transparent 100%);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
 }
 
-.post-button:active{
-    transform: translateY(0);
+.post-button:hover::after,
+.delete-button:hover::after,
+.actions button:hover::after {
+  left: 130%;
 }
-/* Actions*/
 
+.post-button:hover,
+.delete-button:hover,
+.actions button:hover{
+  background: var(--accent-hover, #ff9cc4);
+  box-shadow: var(--glow-btn-hover, none);
+  transform: translateY(-2px);
+}
+
+.post-button:active,
+.delete-button:active,
+.actions button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.post-button { margin: 5px 0; }
 
 .actions {
-display: flex;
-gap: 10px;
-margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
 }
 
-.actions button {
-color: #646464;
-border: none;
-background: #ffdbe9;
-padding: 12px 20px;
-border-radius: 10px;
-cursor: pointer;
-font-size: 16px;
-transition: 0.2s;
+/* ================= ССЫЛКИ В ШАПКЕ ================= */
+.header nav {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
 }
 
-.actions button:hover {
-background: #e2e5e9;
-transform: translateY(-2px);
-} 
-
-.actions button:active{
-    transform: translateY(0);
+.header nav a {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  padding: 9px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  color: var(--header-text, #fff0f7);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 2px 10px rgba(255, 79, 149, 0.25),
+    0 1px 0 rgba(255, 255, 255, 0.5) inset;
+  transition: background 0.3s ease, box-shadow 0.3s ease,
+              transform 0.2s ease, color 0.3s ease;
 }
 
-.page-info h1{
-    color: #fd81a6;
+/* Пробегающий блик */
+.header nav a::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    transparent 100%);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
 }
 
+.header nav a:hover::after {
+  left: 130%;
+}
+
+.header nav a:hover {
+  background: rgba(255, 255, 255, 0.45);
+  color: var(--text-heading, #e0236f);
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 20px rgba(224, 35, 111, 0.45),
+    0 0 24px rgba(255, 180, 215, 0.7),
+    0 1px 0 rgba(255, 255, 255, 0.7) inset;
+}
+
+/* Активная ссылка (если добавляете класс active через NavLink) */
+.header nav a.active,
+.header nav a[aria-current="page"] {
+  color: var(--text-heading, #e0236f);
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 4px 16px rgba(224, 35, 111, 0.4),
+    0 0 20px rgba(255, 180, 215, 0.75);
+}
+
+.header nav a:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Адаптив */
+@media (max-width: 520px) {
+  .header nav { gap: 8px; margin-top: 16px; }
+  .header nav a { padding: 8px 14px; font-size: 14px; }
+}
+
+/* Заголовок страницы — с розовым свечением */
+.page-info h1 {
+  color: var(--text-heading, #ff4f8b);
+  text-shadow: 0 0 20px rgba(255, 127, 176, 0.6);
+}
+
+/* Карусель */
 .carousel {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 
 .carousel img {
-    width: 600px;
-    height: 400px;
-    object-fit: cover;
-    border-radius: 12px;
+  width: 600px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 14px;
+  max-width: 100%;
+  box-shadow: var(--glow-card, 0 10px 30px rgba(255, 111, 174, 0.2));
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  transition: box-shadow 0.4s;
 }
 
 .carousel-btn {
-    background: #ff82a3;
-    color: #fff;
-    border: none;
-    font-size: 24px;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    cursor: pointer;
-  
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ff9cc4 0%, #ff4f8b 100%);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  font-size: 24px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.25s, box-shadow 0.25s, transform 0.2s;
 }
 
 .carousel-btn:hover {
-    background: #ffabd9;
+  background: linear-gradient(135deg, #ffb3d4 0%, #ff6fa5 100%);
+  box-shadow: var(--glow-btn-hover, none);
+  transform: translateY(-2px);
 }
 
 .carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
 }
 
 .dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #bbb;
-    cursor: pointer;
-   
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--text-muted, #ffb0cf);
+  opacity: 0.55;
+  cursor: pointer;
+  transition: box-shadow 0.25s, background 0.25s, opacity 0.25s;
 }
 
 .dot.active {
-    background: #ff9fe7;
+  background: var(--accent, #ff7fb0);
+  opacity: 1;
+  box-shadow: var(--glow-accent, none);
 }
 
-
-.delete-button{
-    color: #646464;
-    margin: 5px;
-    border: none;
-    background: #ffdbe9;
-    padding: 12px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.2s;
-
+/* Аватар-картинка */
+.avatar-pink {
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  box-shadow: var(--glow-accent, none);
 }
 
-.delete-button:hover{
-    background: #e2e5e9;
-    transform: translateY(-2px);
+/* ================= КНОПКА ПЕРЕКЛЮЧЕНИЯ ТЕМЫ ================= */
+.header nav .button-theme {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 18px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--header-text, #fff0f7);
+  cursor: pointer;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.15) 100%);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow:
+    0 2px 10px rgba(255, 79, 149, 0.3),
+    0 1px 0 rgba(255, 255, 255, 0.6) inset;
+  transition: background 0.3s ease, box-shadow 0.3s ease,
+              transform 0.2s ease, color 0.3s ease;
 }
 
-.avatar-pink{
-    border-radius: 100%;
-    width: 50px;
-    height: 50px;
+/* Пробегающий блик */
+.header nav .button-theme::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.85) 50%,
+    transparent 100%);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.header nav .button-theme:hover::after {
+  left: 130%;
+}
+
+.header nav .button-theme:hover {
+  color: var(--text-heading, #e0236f);
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.75) 0%,
+    rgba(255, 230, 242, 0.6) 100%);
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 20px rgba(224, 35, 111, 0.5),
+    0 0 26px rgba(255, 180, 215, 0.8),
+    0 1px 0 rgba(255, 255, 255, 0.8) inset;
+}
+
+.header nav .button-theme:active {
+  transform: translateY(0) scale(0.96);
+}
+
+/* Мягкое «дыхание» свечения, чтобы кнопка выделялась среди ссылок */
+.header nav .button-theme {
+  animation: theme-btn-glow 3.5s ease-in-out infinite;
+}
+
+@keyframes theme-btn-glow {
+  0%, 100% {
+    box-shadow:
+      0 2px 10px rgba(255, 79, 149, 0.3),
+      0 0 14px rgba(255, 180, 215, 0.45),
+      0 1px 0 rgba(255, 255, 255, 0.6) inset;
+  }
+  50% {
+    box-shadow:
+      0 2px 14px rgba(255, 79, 149, 0.5),
+      0 0 26px rgba(255, 180, 215, 0.8),
+      0 1px 0 rgba(255, 255, 255, 0.6) inset;
+  }
+}
+
+/* На узких экранах — компактнее */
+@media (max-width: 520px) {
+  .header nav .button-theme {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
 }
