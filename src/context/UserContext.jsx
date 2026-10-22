@@ -9,10 +9,23 @@ export function UserProvider({ children }){
     const [userName, setUserName] = useState("Victor");
     const [avatar, setAvatar] = useState(()=>{
         return localStorage.getItem("avatar") || "";
-    })
+    });
+
+    useEffect(() =>{
+        try{
+            if(avatar){
+                localStorage.setItem('avatar', avatar);
+            }
+            else{
+                localStorage.removeItem('avatar');
+            }
+        } catch (error){
+            console.error("Не удалось сохранить аватарку", error);
+        }
+    }, [avatar]);
 
         return(
-        <UserContext.Provider value={{ userName, setUserName }}>
+        <UserContext.Provider value={{ userName, setUserName, avatar, setAvatar }}>
             {children}
         </UserContext.Provider>
     );

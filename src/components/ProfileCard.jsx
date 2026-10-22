@@ -84,7 +84,7 @@ function ProfileCard(){
     //     )
     // }
 
-    const { userName } = useUser();
+    const { userName, avatar } = useUser();
 
 
 
@@ -92,7 +92,14 @@ function ProfileCard(){
         <section className='profile-card'>
             <div className='profile'>
                 <div className="avatar">
-                    <img className='avatar-pink' src="https://img1.picmix.com/output/pic/normal/5/6/8/5/9845865_f6237.gif" alt="" />
+                    {avatar ?(
+                        <img className='avatar-pink' src={avatar} alt="" />
+                    ) : (
+                         <div>
+                        
+                        </div>
+                    )}
+                    
                 </div>
                 <div className='profile-info'>
                     <h2>{userName}</h2>
